@@ -1,3 +1,7 @@
 spring:
   profiles:
     active: ${PROFILE}
+
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS}
+    allowed-methods: ${ALLOWED_METHODS}
