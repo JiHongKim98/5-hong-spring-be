@@ -5,3 +5,8 @@ spring:
   cors:
     allowed-origins: ${ALLOWED_ORIGINS}
     allowed-methods: ${ALLOWED_METHODS}
+
+jwt:
+  secret-key: ${SECRET_KEY}
+  access-exp: ${ACCESS_EXPIRED_TIME}
+  refresh-exp: ${REFRESH_EXPIRED_TIME}
