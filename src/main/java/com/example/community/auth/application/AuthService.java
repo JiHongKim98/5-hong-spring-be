@@ -13,6 +13,7 @@ import com.example.community.auth.domain.Token;
 import com.example.community.auth.domain.repository.TokenRepository;
 import com.example.community.auth.exception.AuthException;
 import com.example.community.auth.exception.AuthExceptionType;
+import com.example.community.member.application.CryptService;
 import com.example.community.member.domain.Member;
 import com.example.community.member.domain.respository.MemberRepository;
 import com.example.community.member.exception.MemberException;
@@ -33,12 +34,13 @@ public class AuthService {  // TODO: Facade 패턴 고려
 	private final TokenExtractor tokenExtractor;
 	private final TokenRepository tokenRepository;
 	private final MemberRepository memberRepository;
+	private final CryptService cryptService;
 
 	public TokenResponse login(LoginRequest request) {
 		Member findMember = memberRepository.findByEmailAndIsActiveTrue(request.email())
 			.orElseThrow(() -> new MemberException(NOT_EXIST_MEMBER));
 
-		if (!findMember.isMatchPassword(request.password())) {
+		if (!cryptService.isMatches(request.password(), findMember.getPassword())) {
 			throw new MemberException(INVALID_PASSWORD);
 		}
 

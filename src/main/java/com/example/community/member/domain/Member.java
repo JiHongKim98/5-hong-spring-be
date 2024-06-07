@@ -46,10 +46,6 @@ public class Member extends BaseTimeEntity {
 	@Column(name = "is_active")
 	private boolean isActive;
 
-	public boolean isMatchPassword(String password) {
-		return this.password.equals(password);
-	}
-
 	public void updatePassword(String password) {
 		this.password = password;
 	}

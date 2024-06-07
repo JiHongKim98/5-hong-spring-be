@@ -25,6 +25,7 @@ public class MemberService {
 
 	// TODO: 공통 로직 리팩
 
+	private final CryptService cryptService;
 	private final MemberRepository memberRepository;
 	private final MemberValidateService memberValidateService;
 
@@ -33,10 +34,10 @@ public class MemberService {
 		memberValidateService.throwIfEmailDuplicate(request.email());
 		memberValidateService.throwIfNicknameDuplicate(request.nickname());
 
-		Member newMember = Member.builder()  // TODO: 비밀번호 해싱 or OAuth 전환
+		Member newMember = Member.builder()
 			.email(request.email())
 			.nickname(request.nickname())
-			.password(request.password())
+			.password(cryptService.encode(request.password()))
 			.profileImage(request.profileImage())
 			.build();
 		memberRepository.save(newMember);
