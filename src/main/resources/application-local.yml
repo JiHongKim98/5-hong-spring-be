@@ -8,11 +8,15 @@ spring:
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  # TODO: flyway 추가
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: jdbc:mysql://${MYSQL_URL}
+    user: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    locations: classpath:db/migration
 
   jpa:
-    hibernate:
-      ddl-auto: update  #create-drop
     properties:
       hibernate:
         format_sql: true
