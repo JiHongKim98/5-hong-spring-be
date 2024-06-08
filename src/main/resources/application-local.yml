@@ -22,8 +22,8 @@ spring:
         format_sql: true
         highlight_sql: true
 
-  output:
-    ansi.enabled: always
+#  output:
+#    ansi.enabled: always  # deprecated - custom logback 으로 전환
 
 logging:
   level:
