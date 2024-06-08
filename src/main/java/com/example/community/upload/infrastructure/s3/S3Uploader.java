@@ -38,7 +38,7 @@ public class S3Uploader {
 		try {
 			s3Client.putObject(request, RequestBody.fromBytes(getBytes(file)));
 		} catch (Exception ex) {
-			throw new UploadException(UPLOAD_FAIL_ERROR);
+			throw new UploadException(UPLOAD_IMAGE_FAIL);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class S3Uploader {
 		try {
 			return file.getBytes();
 		} catch (IOException ex) {
-			throw new UploadException(ENCODED_FAIL_ERROR);
+			throw new UploadException(FILE_ENCODE_FAIL);
 		}
 	}
 }

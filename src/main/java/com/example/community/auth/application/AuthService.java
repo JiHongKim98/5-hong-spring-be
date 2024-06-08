@@ -1,5 +1,6 @@
 package com.example.community.auth.application;
 
+import static com.example.community.auth.exception.AuthExceptionType.*;
 import static com.example.community.member.exception.MemberExceptionType.*;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import com.example.community.auth.application.dto.TokenResponse;
 import com.example.community.auth.domain.Token;
 import com.example.community.auth.domain.repository.TokenRepository;
 import com.example.community.auth.exception.AuthException;
-import com.example.community.auth.exception.AuthExceptionType;
 import com.example.community.member.application.CryptService;
 import com.example.community.member.domain.Member;
 import com.example.community.member.domain.respository.MemberRepository;
@@ -55,7 +55,7 @@ public class AuthService {  // TODO: Facade 패턴 고려
 	public TokenResponse reissueToken(ReissueRequest request) {
 		String tokenId = tokenExtractor.extractRefreshToken(request.refreshToken());
 		Token findToken = tokenRepository.findByTokenId(tokenId)
-			.orElseThrow(() -> new AuthException(AuthExceptionType.INVALID_TOKEN));
+			.orElseThrow(() -> new AuthException(INVALID_TOKEN));
 
 		tokenRepository.deleteByTokenId(tokenId);  // refresh rotation
 
@@ -68,9 +68,9 @@ public class AuthService {  // TODO: Facade 패턴 고려
 		String tokenId = tokenExtractor.extractRefreshToken(request.refreshToken());
 
 		Token findToken = tokenRepository.findByTokenId(request.refreshToken())
-			.orElseThrow(() -> new AuthException(AuthExceptionType.INVALID_TOKEN));
+			.orElseThrow(() -> new AuthException(INVALID_TOKEN));
 		if (!findToken.isMatchMemberId(memberId)) {
-			throw new AuthException(AuthExceptionType.UN_MATCHED_AUTHORIZATION);
+			throw new AuthException(UN_MATCHED_AUTHORIZATION);
 		}
 
 		tokenRepository.deleteByTokenId(tokenId);

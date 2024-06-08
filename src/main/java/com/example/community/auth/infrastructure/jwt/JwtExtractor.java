@@ -1,5 +1,7 @@
 package com.example.community.auth.infrastructure.jwt;
 
+import static com.example.community.auth.exception.AuthExceptionType.*;
+
 import java.nio.charset.StandardCharsets;
 
 import javax.crypto.SecretKey;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.community.auth.application.TokenExtractor;
 import com.example.community.auth.exception.AuthException;
-import com.example.community.auth.exception.AuthExceptionType;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -54,7 +55,7 @@ public class JwtExtractor implements TokenExtractor {
 		if (subject.equals(expectedTokenType)) {
 			return claims.get(claimKey, T);
 		}
-		throw new AuthException(AuthExceptionType.INVALID_TOKEN_TYPE);
+		throw new AuthException(INVALID_TOKEN_TYPE);
 	}
 
 	private Claims parseClaim(String token) {
@@ -62,9 +63,9 @@ public class JwtExtractor implements TokenExtractor {
 			return jwtParser.parseClaimsJws(token)
 				.getBody();
 		} catch (ExpiredJwtException ex) {
-			throw new AuthException(AuthExceptionType.EXPIRED_TOKEN);
+			throw new AuthException(EXPIRED_TOKEN);
 		} catch (Exception ex) {
-			throw new AuthException(AuthExceptionType.INVALID_TOKEN);
+			throw new AuthException(INVALID_TOKEN);
 		}
 	}
 }
