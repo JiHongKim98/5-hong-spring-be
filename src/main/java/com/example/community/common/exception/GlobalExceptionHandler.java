@@ -1,8 +1,14 @@
 package com.example.community.common.exception;
 
+import java.util.Objects;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private static final String SERVER_ERROR_MESSAGE = "INTERNAL_SERVER_ERROR";
+	private static final String MISSING_REQUIRED_FIELDS_MESSAGE = "ARGUMENT_NOT_VALID";
 
 	// Custom Exception 응답
 	@ExceptionHandler(BaseException.class)
@@ -30,5 +37,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return ResponseEntity.internalServerError()
 			.body(new ExceptionResponse(SERVER_ERROR_MESSAGE, ex.getMessage()));
+	}
+
+	// 전역 유효성 검사 예외 처리 (validation)
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+		MethodArgumentNotValidException ex,
+		HttpHeaders headers,
+		HttpStatusCode status,
+		WebRequest request
+	) {
+		log.warn(ex.getMessage(), ex);
+
+		String message = Objects.requireNonNull(ex.getBindingResult().getFieldError())
+			.getDefaultMessage();
+		return ResponseEntity.status(status)
+			.body(new ExceptionResponse(MISSING_REQUIRED_FIELDS_MESSAGE, message));
 	}
 }
