@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import com.example.community.common.exception.ExceptionType;
 
 public enum UploadExceptionType implements ExceptionType {
-	ENCODED_FAIL_ERROR("", HttpStatus.BAD_REQUEST),
-	UPLOAD_FAIL_ERROR("", HttpStatus.BAD_REQUEST),  // 400 응답으로 하는게 좋으려나..?
+	FILE_ENCODE_FAIL("파일 인코딩 실패", HttpStatus.BAD_REQUEST),
+	UPLOAD_IMAGE_FAIL("이미지 업로드 실패", HttpStatus.BAD_REQUEST),  // 400 응답으로 하는게 좋으려나..?
 	;
 
 	private final String message;

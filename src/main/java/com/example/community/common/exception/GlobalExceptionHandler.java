@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-	private final static String SERVER_ERROR_MESSAGE = "INTERNAL_SERVER_ERROR";
+	private static final String SERVER_ERROR_MESSAGE = "INTERNAL_SERVER_ERROR";
 
 	// Custom Exception 응답
 	@ExceptionHandler(BaseException.class)
