@@ -1,4 +1,4 @@
-package com.example.community.auth.infrastructure.jpa;
+package com.example.community.auth.infrastructure.in_memory;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
