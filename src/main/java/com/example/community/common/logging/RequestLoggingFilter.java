@@ -2,16 +2,16 @@ package com.example.community.common.logging;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StopWatch;
-import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
+
+import com.example.community.common.utils.CommunityStreamUtils;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -46,7 +46,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 		cachedResponse.copyBodyToResponse();
 	}
 
-	// TODO: 리팩토링..
+	// TODO: 리팩토링 시급..
 	private void logging(
 		ContentCachingRequestWrapper request,
 		ContentCachingResponseWrapper response,
@@ -59,7 +59,6 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 		String queryString = request.getQueryString();
 		String statusCode = HttpStatus.valueOf(status).toString();
 
-		// TODO: 리팩토링
 		// Generated log message
 		StringBuilder logMessage = new StringBuilder();
 
@@ -97,7 +96,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
 	private Optional<String> getRequestBody(ContentCachingRequestWrapper request) {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getContentAsByteArray());
-		String requestBody = convertInputStreamToString(inputStream);
+		String requestBody = CommunityStreamUtils.toString(inputStream);
 		if (StringUtils.hasText(requestBody)) {
 			return Optional.of(requestBody);
 		}
@@ -106,19 +105,10 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
 	private Optional<String> getResponseBody(ContentCachingResponseWrapper response) {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(response.getContentAsByteArray());
-		String responseBody = convertInputStreamToString(inputStream);
+		String responseBody = CommunityStreamUtils.toString(inputStream);
 		if (StringUtils.hasText(responseBody)) {
 			return Optional.of(responseBody);
 		}
 		return Optional.empty();
-	}
-
-	private String convertInputStreamToString(ByteArrayInputStream inputStream) {
-		try {
-			return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-		} catch (IOException ex) {
-			log.error("convert exception", ex);
-			return "";
-		}
 	}
 }
