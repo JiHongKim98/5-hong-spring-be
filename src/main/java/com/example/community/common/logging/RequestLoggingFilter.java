@@ -42,6 +42,8 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 		stopWatch.stop();
 		long requestDuration = stopWatch.getTotalTimeMillis();
 		logging(cachedRequest, cachedResponse, requestDuration);
+
+		cachedResponse.copyBodyToResponse();
 	}
 
 	// TODO: 리팩토링..
