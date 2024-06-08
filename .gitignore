@@ -36,6 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
+### Logging ###
+*.log
+
 ### Local ###
 .env
 /src/main/generated/
