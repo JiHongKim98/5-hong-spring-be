@@ -1,7 +1,9 @@
 package com.example.community.comment.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record CreateCommentRequest(
-	Long postId,
-	String contents
+	@NotBlank Long postId,
+	@NotBlank String contents
 ) {
 }

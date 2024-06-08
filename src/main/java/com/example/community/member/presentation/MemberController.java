@@ -19,6 +19,7 @@ import com.example.community.member.application.dto.SignupResponse;
 import com.example.community.member.application.dto.UpdateNicknameRequest;
 import com.example.community.member.application.dto.UpdatePasswordRequest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +33,7 @@ public class MemberController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<SignupResponse> signup(
-		@RequestBody SignupRequest signupRequest
+		@RequestBody @Valid SignupRequest signupRequest
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(memberService.signup(signupRequest));
@@ -50,7 +51,7 @@ public class MemberController {
 	@PutMapping("/nickname")
 	public ResponseEntity<Void> nicknameValidate(
 		@Auth Long memberId,
-		@RequestBody UpdateNicknameRequest request
+		@RequestBody @Valid UpdateNicknameRequest request
 	) {
 		memberService.updateNickname(memberId, request);
 		return ResponseEntity.ok().build();
@@ -60,7 +61,7 @@ public class MemberController {
 	@PutMapping("/password")
 	public ResponseEntity<Void> passwordValidate(
 		@Auth Long memberId,
-		@RequestBody UpdatePasswordRequest request
+		@RequestBody @Valid UpdatePasswordRequest request
 	) {
 		memberService.updatePassword(memberId, request);
 		return ResponseEntity.ok().build();

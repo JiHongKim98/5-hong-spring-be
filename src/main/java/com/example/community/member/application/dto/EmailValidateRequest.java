@@ -1,6 +1,8 @@
 package com.example.community.member.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record EmailValidateRequest(
-	String email
+	@NotBlank String email
 ) {
 }

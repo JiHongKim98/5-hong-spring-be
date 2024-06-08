@@ -1,8 +1,10 @@
 package com.example.community.post.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record CreatePostRequest(
-	String title,
-	String contents,
-	String thumbnail
+	@NotBlank String title,
+	@NotBlank String contents,
+	@NotBlank String thumbnail
 ) {
 }

@@ -21,6 +21,7 @@ import com.example.community.post.application.dto.PagedPostResponse;
 import com.example.community.post.application.dto.PostDetailResponse;
 import com.example.community.post.application.dto.UpdatePostRequest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,7 +51,7 @@ public class PostController {
 	@PostMapping
 	public ResponseEntity<CreatePostResponse> createPost(
 		@Auth Long memberId,
-		@RequestBody CreatePostRequest request
+		@RequestBody @Valid CreatePostRequest request
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(postService.createPost(memberId, request));
@@ -61,7 +62,7 @@ public class PostController {
 	public ResponseEntity<Void> updatePostInfo(
 		@Auth Long memberId,
 		@PathVariable("postId") Long postId,
-		@RequestBody UpdatePostRequest request
+		@RequestBody @Valid UpdatePostRequest request
 	) {
 		postService.updatePost(memberId, postId, request);
 		return ResponseEntity.ok().build();

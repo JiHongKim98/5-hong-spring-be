@@ -19,6 +19,7 @@ import com.example.community.comment.application.dto.UpdateCommentRequest;
 import com.example.community.common.annotation.Auth;
 import com.example.community.common.annotation.LoginRequired;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +43,7 @@ public class CommentController {
 	@PostMapping
 	public ResponseEntity<CreateCommentResponse> createComment(
 		@Auth Long memberId,
-		@RequestBody CreateCommentRequest request
+		@RequestBody @Valid CreateCommentRequest request
 	) {
 		return ResponseEntity.ok(commentService.createComment(memberId, request));
 	}
@@ -52,7 +53,7 @@ public class CommentController {
 	public ResponseEntity<Void> updateComment(
 		@Auth Long memberId,
 		@PathVariable("commentId") Long commentId,
-		@RequestBody UpdateCommentRequest request
+		@RequestBody @Valid UpdateCommentRequest request
 	) {
 		commentService.updateComment(memberId, commentId, request);
 		return ResponseEntity.ok().build();

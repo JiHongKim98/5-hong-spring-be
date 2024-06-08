@@ -14,6 +14,7 @@ import com.example.community.auth.application.dto.TokenResponse;
 import com.example.community.common.annotation.Auth;
 import com.example.community.common.annotation.LoginRequired;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,14 +30,14 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenResponse> login(
-		@RequestBody LoginRequest loginRequest
+		@RequestBody @Valid LoginRequest loginRequest
 	) {
 		return ResponseEntity.ok(authService.login(loginRequest));
 	}
 
 	@PostMapping("/reissue")
 	public ResponseEntity<TokenResponse> reissue(
-		@RequestBody ReissueRequest reissueRequest
+		@RequestBody @Valid ReissueRequest reissueRequest
 	) {
 		return ResponseEntity.ok(authService.reissueToken(reissueRequest));
 	}
@@ -45,7 +46,7 @@ public class AuthController {
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(
 		@Auth Long memberId,
-		@RequestBody LogoutRequest logoutRequest
+		@RequestBody @Valid LogoutRequest logoutRequest
 	) {
 		authService.logout(memberId, logoutRequest);
 		return ResponseEntity.noContent().build();

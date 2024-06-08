@@ -10,6 +10,7 @@ import com.example.community.member.application.MemberValidateService;
 import com.example.community.member.application.dto.EmailValidateRequest;
 import com.example.community.member.application.dto.NicknameValidateRequest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +24,7 @@ public class MemberValidateController {
 
 	@PostMapping("/email")
 	public ResponseEntity<Void> emailValidate(
-		@RequestBody EmailValidateRequest request
+		@RequestBody @Valid EmailValidateRequest request
 	) {
 		memberValidateService.throwIfEmailDuplicate(request.email());
 		return ResponseEntity.ok().build();
@@ -31,7 +32,7 @@ public class MemberValidateController {
 
 	@PostMapping("/nickname")
 	public ResponseEntity<Void> nicknameValidate(
-		@RequestBody NicknameValidateRequest request
+		@RequestBody @Valid NicknameValidateRequest request
 	) {
 		memberValidateService.throwIfNicknameDuplicate(request.nickname());
 		return ResponseEntity.ok().build();
