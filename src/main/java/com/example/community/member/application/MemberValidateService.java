@@ -1,9 +1,12 @@
 package com.example.community.member.application;
 
+import static com.example.community.member.exception.MemberExceptionType.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.community.member.domain.respository.MemberRepository;
+import com.example.community.member.exception.MemberException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +21,13 @@ public class MemberValidateService {
 
 	public void throwIfEmailDuplicate(String email) {
 		if (memberRepository.existsByEmail(email)) {
-			throw new RuntimeException("409 중복된 이메일");
+			throw new MemberException(DUPLICATE_EMAIL);
 		}
 	}
 
 	public void throwIfNicknameDuplicate(String nickname) {
 		if (memberRepository.existsByNickname(nickname)) {
-			throw new RuntimeException("409 중복된 닉네임");
+			throw new MemberException(DUPLICATE_NICKNAME);
 		}
 	}
 }
