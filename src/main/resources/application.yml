@@ -2,6 +2,11 @@ spring:
   profiles:
     active: ${PROFILE}
 
+  servlet:
+    multipart:
+      max-file-size: 1MB  # default 값
+      max-request-size: 1MB
+
   cors:
     allowed-origins: ${ALLOWED_ORIGINS}
     allowed-methods: ${ALLOWED_METHODS}
