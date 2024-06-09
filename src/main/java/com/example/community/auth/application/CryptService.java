@@ -4,5 +4,5 @@ public interface CryptService {
 
 	String encode(String password);
 
-	boolean isMatches(String targetPassword, String encodedPassword);
+	void isMatchOrThrow(String targetPassword, String encodedPassword);
 }

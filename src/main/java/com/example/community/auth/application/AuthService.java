@@ -13,7 +13,6 @@ import com.example.community.auth.application.dto.TokenResponse;
 import com.example.community.auth.domain.Token;
 import com.example.community.auth.domain.repository.TokenRepository;
 import com.example.community.auth.exception.AuthException;
-import com.example.community.member.application.CryptService;
 import com.example.community.member.domain.Member;
 import com.example.community.member.domain.respository.MemberRepository;
 import com.example.community.member.exception.MemberException;
@@ -25,28 +24,22 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class AuthService {  // TODO: Facade 패턴 고려
+public class AuthService {  // TODO: 공통 로직 리팩토링
 
-	// TODO: 공통 로직 리팩토링
-
-	// TODO: dependency 가 너무 많음
+	private final CryptService cryptService;
 	private final TokenProvider tokenProvider;
 	private final TokenExtractor tokenExtractor;
 	private final TokenRepository tokenRepository;
 	private final MemberRepository memberRepository;
-	private final CryptService cryptService;
 
 	public TokenResponse login(LoginRequest request) {
 		Member findMember = memberRepository.findByEmailAndIsActiveTrue(request.email())
 			.orElseThrow(() -> new MemberException(NOT_EXIST_MEMBER));
 
-		if (!cryptService.isMatches(request.password(), findMember.getPassword())) {
-			throw new MemberException(INVALID_PASSWORD);
-		}
+		cryptService.isMatchOrThrow(request.password(), findMember.getPassword());
 
 		Token token = new Token(findMember.getId());
 		tokenRepository.save(token);
-
 		String accessToken = tokenProvider.generatedAccessToken(token.getMemberId());
 		String refreshToken = tokenProvider.generatedRefreshToken(token.getTokenId());
 		return TokenResponse.of(accessToken, refreshToken);

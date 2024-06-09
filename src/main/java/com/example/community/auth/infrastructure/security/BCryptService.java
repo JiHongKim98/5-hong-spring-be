@@ -1,9 +1,12 @@
 package com.example.community.auth.infrastructure.security;
 
+import static com.example.community.auth.exception.AuthExceptionType.*;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.community.auth.application.CryptService;
+import com.example.community.auth.exception.AuthException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +20,10 @@ public class BCryptService implements CryptService {
 		return bCryptPasswordEncoder.encode(password);
 	}
 
-	public boolean isMatches(String targetPassword, String encodedPassword) {
-		return bCryptPasswordEncoder.matches(targetPassword, encodedPassword);
+	public void isMatchOrThrow(String targetPassword, String encodedPassword) {
+		boolean matchesResult = bCryptPasswordEncoder.matches(targetPassword, encodedPassword);
+		if (!matchesResult) {
+			throw new AuthException(UN_MATCHED_PASSWORD);
+		}
 	}
 }

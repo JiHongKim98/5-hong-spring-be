@@ -9,6 +9,7 @@ public enum AuthExceptionType implements ExceptionType {
 	EXPIRED_TOKEN("이미 만료된 토큰입니다.", HttpStatus.UNAUTHORIZED),
 	INVALID_TOKEN("유효하지 않는 토큰입니다.", HttpStatus.BAD_REQUEST),
 	INVALID_TOKEN_TYPE("유효하지 않는 토큰 타입입니다.", HttpStatus.BAD_REQUEST),
+	UN_MATCHED_PASSWORD("비밀번호가 다릅니다.", HttpStatus.UNAUTHORIZED),
 	UN_MATCHED_AUTHORIZATION("일치하지 않는 사용자 입니다.", HttpStatus.UNAUTHORIZED),
 	;
 
