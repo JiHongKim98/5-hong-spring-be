@@ -1,4 +1,4 @@
-package com.example.community.member.application;
+package com.example.community.auth.application;
 
 public interface CryptService {
 

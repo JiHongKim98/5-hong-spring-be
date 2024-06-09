@@ -5,6 +5,7 @@ import static com.example.community.member.exception.MemberExceptionType.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.community.auth.application.CryptService;
 import com.example.community.member.application.dto.MemberInfoResponse;
 import com.example.community.member.application.dto.SignupRequest;
 import com.example.community.member.application.dto.SignupResponse;
@@ -56,8 +57,7 @@ public class MemberService {
 		Member findMember = memberRepository.findByIdAndIsActiveTrue(memberId)
 			.orElseThrow(() -> new MemberException(NOT_EXIST_MEMBER));
 
-		findMember.disabledMember();
-		memberRepository.save(findMember);
+		memberRepository.delete(findMember);
 	}
 
 	@Transactional

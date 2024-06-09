@@ -1,9 +1,9 @@
-package com.example.community.member.infrastructure;
+package com.example.community.auth.infrastructure.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.example.community.member.application.CryptService;
+import com.example.community.auth.application.CryptService;
 
 import lombok.RequiredArgsConstructor;
 
