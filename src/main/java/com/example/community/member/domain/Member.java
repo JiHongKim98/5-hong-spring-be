@@ -11,11 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-// TODO: @SQLRestriction 을 제외 하려면 네이티브 쿼리 작성해야함 -> MySQL boolean 타입으로 캐스팅 불가 해결해야함
 @Getter
 @Entity
 @Table(name = "member")
@@ -26,6 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity {
 
+	@Setter  // FIXME: JPA 로 변경시 삭제
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
@@ -54,6 +54,10 @@ public class Member extends BaseTimeEntity {
 		this.nickname = nickname;
 	}
 
+	public void updateProfileImage(String imageUrl) {
+		profileImage = imageUrl;
+	}
+
 	public void disabledMember() {
 		isActive = false;
 	}
@@ -62,12 +66,72 @@ public class Member extends BaseTimeEntity {
 		isActive = true;
 	}
 
-	@Builder
+	// @Builder
 	public Member(String email, String password, String nickname, String profileImage) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
 		this.profileImage = profileImage;
 		this.isActive = true;
+	}
+
+	public Member(Long id, String email, String password, String nickname, String profileImage, boolean isActive) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.profileImage = profileImage;
+		this.isActive = isActive;
+	}
+
+	// Nested
+	public static class MemberBuilder {
+		private Long id;
+		private String email;
+		private String password;
+		private String nickname;
+		private String profileImage;
+		private boolean isActive = true;
+
+		public MemberBuilder id(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public MemberBuilder email(String email) {
+			this.email = email;
+			return this;
+		}
+
+		public MemberBuilder password(String password) {
+			this.password = password;
+			return this;
+		}
+
+		public MemberBuilder nickname(String nickname) {
+			this.nickname = nickname;
+			return this;
+		}
+
+		public MemberBuilder profileImage(String profileImage) {
+			this.profileImage = profileImage;
+			return this;
+		}
+
+		public MemberBuilder isActive(boolean isActive) {
+			this.isActive = isActive;
+			return this;
+		}
+
+		public Member build() {
+			if (id != null) {
+				return new Member(id, email, password, nickname, profileImage, isActive);
+			}
+			return new Member(email, password, nickname, profileImage);
+		}
+	}
+
+	public static MemberBuilder builder() {
+		return new MemberBuilder();
 	}
 }
