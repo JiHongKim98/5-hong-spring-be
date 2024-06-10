@@ -1,4 +1,4 @@
-package com.example.community.post.infrastructure;
+package com.example.community.post.infrastructure.querydsl;
 
 import static com.example.community.member.domain.QMember.*;
 import static com.example.community.post.domain.QPost.*;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class PostCustomRepositoryImpl implements PostCustomRepository {
+public class QueryDslPostRepository implements PostCustomRepository {
 
 	private static final Long maxViewSize = 5L;  // 최대로 보여줄 게시글 수
 	private static final Long sliceSize = maxViewSize + 1L;

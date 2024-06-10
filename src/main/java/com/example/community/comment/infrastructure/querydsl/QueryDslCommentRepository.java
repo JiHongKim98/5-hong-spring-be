@@ -1,4 +1,4 @@
-package com.example.community.comment.infrastructure;
+package com.example.community.comment.infrastructure.querydsl;
 
 import static com.example.community.comment.domain.QComment.*;
 import static com.example.community.member.domain.QMember.*;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class CommentCustomRepositoryImpl implements CommentCustomRepository {
+public class QueryDslCommentRepository implements CommentCustomRepository {
 
 	private static final Long maxViewSize = 10L;  // 최대로 보여줄 댓글 수
 	private static final Long sliceSize = maxViewSize + 1L;
