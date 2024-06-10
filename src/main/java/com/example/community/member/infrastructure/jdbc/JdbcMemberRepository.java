@@ -37,6 +37,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
 	/**
 	 * JPA 와의 호환성을 위해 `save()` 메서드에서 엔티티 클래스의 id 값의 유무로 insert 및 update 를 진행하도록 구현
+	 *
 	 * @param member 엔티티 클래스
 	 * @return Member
 	 */
@@ -69,7 +70,7 @@ public class JdbcMemberRepository implements MemberRepository {
 			    UPDATE member
 			    SET password = :password,
 			        nickname = :nickname,
-			        profile_image = :profileImage,
+			        profile_image = :profileImage
 			    WHERE member_id = :id
 			""";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(member);
