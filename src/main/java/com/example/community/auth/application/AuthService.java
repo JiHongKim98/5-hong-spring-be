@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.community.auth.application.dto.LoginRequest;
-import com.example.community.auth.application.dto.LogoutRequest;
-import com.example.community.auth.application.dto.ReissueRequest;
 import com.example.community.auth.application.dto.TokenResponse;
 import com.example.community.auth.domain.Token;
 import com.example.community.auth.domain.repository.TokenRepository;
@@ -45,23 +43,26 @@ public class AuthService {  // TODO: 공통 로직 리팩토링
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 
-	public TokenResponse reissueToken(ReissueRequest request) {
-		String tokenId = tokenExtractor.extractRefreshToken(request.refreshToken());
+	public TokenResponse reissueToken(String currentToken) {
+		String tokenId = tokenExtractor.extractRefreshToken(currentToken);
 		Token findToken = tokenRepository.findByTokenId(tokenId)
 			.orElseThrow(() -> new AuthException(INVALID_TOKEN));
 
 		tokenRepository.deleteByTokenId(tokenId);  // refresh rotation
 
-		String accessToken = tokenProvider.generatedAccessToken(findToken.getMemberId());
-		String refreshToken = tokenProvider.generatedRefreshToken(findToken.getTokenId());
+		Token token = new Token(findToken.getMemberId());
+		tokenRepository.save(token);
+
+		String accessToken = tokenProvider.generatedAccessToken(token.getMemberId());
+		String refreshToken = tokenProvider.generatedRefreshToken(token.getTokenId());
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 
-	public void logout(Long memberId, LogoutRequest request) {
-		String tokenId = tokenExtractor.extractRefreshToken(request.refreshToken());
-
-		Token findToken = tokenRepository.findByTokenId(request.refreshToken())
+	public void logout(Long memberId, String refreshToken) {
+		String tokenId = tokenExtractor.extractRefreshToken(refreshToken);
+		Token findToken = tokenRepository.findByTokenId(tokenId)
 			.orElseThrow(() -> new AuthException(INVALID_TOKEN));
+
 		if (!findToken.isMatchMemberId(memberId)) {
 			throw new AuthException(UN_MATCHED_AUTHORIZATION);
 		}
