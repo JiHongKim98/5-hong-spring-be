@@ -43,6 +43,7 @@ public class AuthController {
 			.maxAge(COOKIE_MAX_AGE)
 			.httpOnly(true)
 			.sameSite(SAME_SITE_NONE)
+			.path("/")
 			.build();
 		response.addHeader(SET_COOKIE, cookie.toString());
 		return ResponseEntity.ok(tokenPair);
