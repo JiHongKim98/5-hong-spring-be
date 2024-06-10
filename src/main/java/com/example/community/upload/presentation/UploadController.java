@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.community.common.annotation.LoginRequired;
 import com.example.community.upload.application.UploadService;
 import com.example.community.upload.application.dto.UploadImageResponse;
 
@@ -22,7 +21,6 @@ public class UploadController {
 
 	private final UploadService uploadService;
 
-	@LoginRequired
 	@PostMapping("/image")
 	public ResponseEntity<UploadImageResponse> uploadImage(
 		@RequestParam("file") MultipartFile file
