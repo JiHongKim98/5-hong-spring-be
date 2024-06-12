@@ -4,21 +4,20 @@ import static com.example.community.auth.exception.AuthExceptionType.*;
 
 import java.util.Objects;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.example.community.auth.application.TokenExtractor;
 import com.example.community.auth.exception.AuthException;
 import com.example.community.common.annotation.LoginRequired;
+import com.example.community.common.utils.AuthHeaderExtractor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@Component
+// @Component  // deprecated
+@Deprecated(since = "2024-06-13")
 @RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
 
