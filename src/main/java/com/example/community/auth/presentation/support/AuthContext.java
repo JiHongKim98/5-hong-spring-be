@@ -2,12 +2,12 @@ package com.example.community.auth.presentation.support;
 
 import static com.example.community.auth.exception.AuthExceptionType.*;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
 import com.example.community.auth.exception.AuthException;
 
-@Component
+// @Component  // deprecated
+@Deprecated(since = "2024-06-13")
 @RequestScope
 public class AuthContext {
 

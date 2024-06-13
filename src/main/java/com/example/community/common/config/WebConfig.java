@@ -2,7 +2,6 @@ package com.example.community.common.config;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,7 +11,12 @@ import com.example.community.auth.presentation.support.AuthInterceptor;
 
 import lombok.RequiredArgsConstructor;
 
-@Configuration
+/**
+ * @deprecated interceptor 기반 -> Security 를 사용한 인증으로 변경
+ * {@link com.example.community.common.security} 패키지 참고
+ */
+// @Configuration  // deprecated
+@Deprecated(since = "2024-06-13")
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 

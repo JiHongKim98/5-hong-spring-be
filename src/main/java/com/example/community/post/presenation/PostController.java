@@ -2,6 +2,7 @@ package com.example.community.post.presenation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.community.common.annotation.Auth;
-import com.example.community.common.annotation.LoginRequired;
 import com.example.community.post.application.PostService;
 import com.example.community.post.application.dto.CreatePostRequest;
 import com.example.community.post.application.dto.CreatePostResponse;
@@ -47,20 +46,22 @@ public class PostController {
 		return ResponseEntity.ok(postService.getPostInfo(postId));
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PostMapping
 	public ResponseEntity<CreatePostResponse> createPost(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@RequestBody @Valid CreatePostRequest request
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(postService.createPost(memberId, request));
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PutMapping("/{postId}")
 	public ResponseEntity<Void> updatePostInfo(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@PathVariable("postId") Long postId,
 		@RequestBody @Valid UpdatePostRequest request
 	) {
@@ -68,10 +69,11 @@ public class PostController {
 		return ResponseEntity.ok().build();
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@DeleteMapping("/{postId}")
 	public ResponseEntity<Void> disabledPost(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@PathVariable("postId") Long postId
 	) {
 		postService.deletePost(memberId, postId);

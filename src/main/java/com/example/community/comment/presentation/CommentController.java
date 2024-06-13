@@ -1,6 +1,7 @@
 package com.example.community.comment.presentation;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,6 @@ import com.example.community.comment.application.dto.CreateCommentRequest;
 import com.example.community.comment.application.dto.CreateCommentResponse;
 import com.example.community.comment.application.dto.PagedCommentResponse;
 import com.example.community.comment.application.dto.UpdateCommentRequest;
-import com.example.community.common.annotation.Auth;
-import com.example.community.common.annotation.LoginRequired;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,19 +38,21 @@ public class CommentController {
 		return ResponseEntity.ok(commentService.getCommentBySlice(cursor, postId));
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PostMapping
 	public ResponseEntity<CreateCommentResponse> createComment(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@RequestBody @Valid CreateCommentRequest request
 	) {
 		return ResponseEntity.ok(commentService.createComment(memberId, request));
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PutMapping("/{commentId}")
 	public ResponseEntity<Void> updateComment(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@PathVariable("commentId") Long commentId,
 		@RequestBody @Valid UpdateCommentRequest request
 	) {
@@ -59,10 +60,11 @@ public class CommentController {
 		return ResponseEntity.ok().build();
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@DeleteMapping("/{commentId}")
 	public ResponseEntity<Void> deleteComment(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@PathVariable("commentId") Long commentId
 	) {
 		commentService.deleteComment(memberId, commentId);

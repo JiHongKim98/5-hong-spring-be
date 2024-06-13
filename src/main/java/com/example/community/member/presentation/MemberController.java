@@ -2,6 +2,7 @@ package com.example.community.member.presentation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.community.common.annotation.Auth;
-import com.example.community.common.annotation.LoginRequired;
 import com.example.community.member.application.MemberService;
 import com.example.community.member.application.dto.MemberInfoResponse;
 import com.example.community.member.application.dto.SignupRequest;
@@ -39,38 +38,43 @@ public class MemberController {
 			.body(memberService.signup(signupRequest));
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@GetMapping("/me")
 	public ResponseEntity<MemberInfoResponse> me(
-		@Auth Long memberId
+		// @Auth Long memberId
+		@AuthenticationPrincipal Long memberId
 	) {
+		log.info("memberId = {}", memberId);
 		return ResponseEntity.ok(memberService.getCurrentMemberInfo(memberId));
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PutMapping("/nickname")
-	public ResponseEntity<Void> nicknameValidate(
-		@Auth Long memberId,
+	public ResponseEntity<Void> updateNickname(
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@RequestBody @Valid UpdateNicknameRequest request
 	) {
 		memberService.updateNickname(memberId, request);
 		return ResponseEntity.ok().build();
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PutMapping("/password")
-	public ResponseEntity<Void> passwordValidate(
-		@Auth Long memberId,
+	public ResponseEntity<Void> updatePassword(
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@RequestBody @Valid UpdatePasswordRequest request
 	) {
 		memberService.updatePassword(memberId, request);
 		return ResponseEntity.ok().build();
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@DeleteMapping
 	public ResponseEntity<Void> withdraw(
-		@Auth Long memberId
+		// @Auth Long memberId
+		@AuthenticationPrincipal Long memberId
 	) {
 		memberService.withdraw(memberId);
 		return ResponseEntity.ok().build();

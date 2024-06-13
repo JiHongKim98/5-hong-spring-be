@@ -1,7 +1,6 @@
 package com.example.community.auth.presentation.support;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -11,7 +10,8 @@ import com.example.community.common.annotation.Auth;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+// @Component  // deprecated
+@Deprecated(since = "2024-06-13")
 @RequiredArgsConstructor
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 

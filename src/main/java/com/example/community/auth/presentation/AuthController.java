@@ -4,6 +4,7 @@ import static org.springframework.http.HttpHeaders.*;
 
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.community.auth.application.AuthService;
 import com.example.community.auth.application.dto.LoginRequest;
 import com.example.community.auth.application.dto.TokenResponse;
-import com.example.community.common.annotation.Auth;
-import com.example.community.common.annotation.LoginRequired;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -65,10 +64,11 @@ public class AuthController {
 		return ResponseEntity.ok(tokenPair);
 	}
 
-	@LoginRequired
+	// @LoginRequired
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(
-		@Auth Long memberId,
+		// @Auth Long memberId,
+		@AuthenticationPrincipal Long memberId,
 		@CookieValue(COOKIE_REFRESH_TOKEN) String refreshToken
 	) {
 		authService.logout(memberId, refreshToken);
