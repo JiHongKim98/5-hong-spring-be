@@ -1,4 +1,4 @@
-package com.example.community.auth.presentation.support;
+package com.example.community.common.utils;
 
 import java.util.Optional;
 
