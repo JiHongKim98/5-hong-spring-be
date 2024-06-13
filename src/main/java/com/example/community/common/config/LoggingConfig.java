@@ -4,10 +4,12 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.community.common.logging.MdcLoggingFilter;
 import com.example.community.common.logging.RequestLoggingFilter;
+import com.example.community.common.logging.query.QueryCountInterceptor;
 
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoggingConfig implements WebMvcConfigurer {
 
-	// 필터 순서 (MDC) -> (REQUEST CACHE) -> (THE OTHERS...)
+	private final QueryCountInterceptor queryCountInterceptor;
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(queryCountInterceptor)
+			.addPathPatterns("/**")
+			.order(0);
+	}
 
 	@Bean
 	public FilterRegistrationBean<Filter> mdcLoggingFilter() {
