@@ -20,12 +20,12 @@ public final class SecurityPaths {
 		new AuthPath(DELETE, "/members"),
 
 		// post
-		new AuthPath(POST, "/posts/{id}"),
+		new AuthPath(POST, "/posts"),
 		new AuthPath(PUT, "/posts/{id}"),
 		new AuthPath(DELETE, "/posts/{id}"),
 
 		// comment
-		new AuthPath(POST, "/comments/{id}"),
+		new AuthPath(POST, "/comments"),
 		new AuthPath(PUT, "/comments/{id}"),
 		new AuthPath(DELETE, "/comments/{id}")
 	);
