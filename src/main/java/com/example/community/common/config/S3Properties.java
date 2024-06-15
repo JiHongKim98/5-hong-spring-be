@@ -1,4 +1,4 @@
-package com.example.community.upload.infrastructure.s3;
+package com.example.community.common.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
