@@ -5,7 +5,7 @@ import static com.example.community.member.exception.MemberExceptionType.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.community.auth.application.CryptService;
+import com.example.community.auth.application.CryptoService;
 import com.example.community.member.application.dto.MemberInfoResponse;
 import com.example.community.member.application.dto.SignupRequest;
 import com.example.community.member.application.dto.SignupResponse;
@@ -26,7 +26,7 @@ public class MemberService {
 
 	// TODO: 공통 로직 리팩
 
-	private final CryptService cryptService;
+	private final CryptoService cryptoService;
 	private final MemberRepository memberRepository;
 	private final MemberValidateService memberValidateService;
 
@@ -38,7 +38,7 @@ public class MemberService {
 		Member newMember = Member.builder()
 			.email(request.email())
 			.nickname(request.nickname())
-			.password(cryptService.encode(request.password()))
+			.password(cryptoService.encode(request.password()))
 			.profileImage(request.profileImage())
 			.build();
 		memberRepository.save(newMember);

@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthService {  // TODO: 공통 로직 리팩토링
 
-	private final CryptService cryptService;
+	private final CryptoService cryptoService;
 	private final TokenProvider tokenProvider;
 	private final TokenExtractor tokenExtractor;
 	private final TokenRepository tokenRepository;
@@ -34,7 +34,7 @@ public class AuthService {  // TODO: 공통 로직 리팩토링
 		Member findMember = memberRepository.findByEmailAndIsActiveTrue(request.email())
 			.orElseThrow(() -> new MemberException(NOT_EXIST_MEMBER));
 
-		cryptService.isMatchOrThrow(request.password(), findMember.getPassword());
+		cryptoService.isMatchOrThrow(request.password(), findMember.getPassword());
 
 		Token token = new Token(findMember.getId());
 		tokenRepository.save(token);

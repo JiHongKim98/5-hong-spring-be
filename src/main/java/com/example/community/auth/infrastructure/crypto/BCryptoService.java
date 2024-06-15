@@ -5,14 +5,14 @@ import static com.example.community.auth.exception.AuthExceptionType.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.example.community.auth.application.CryptService;
+import com.example.community.auth.application.CryptoService;
 import com.example.community.auth.exception.AuthException;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class BCryptService implements CryptService {
+public class BCryptoService implements CryptoService {
 
 	private final PasswordEncoder bCryptPasswordEncoder;
 

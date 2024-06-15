@@ -1,6 +1,6 @@
 package com.example.community.auth.application;
 
-public interface CryptService {
+public interface CryptoService {
 
 	String encode(String password);
 
