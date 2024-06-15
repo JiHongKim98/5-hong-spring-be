@@ -2,7 +2,7 @@ package com.example.community.upload.infrastructure.s3;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "aws.s3")
+@ConfigurationProperties(prefix = "cloud.aws.s3")
 public record S3Properties(
 	String bucketName,
 	String accessKey,
