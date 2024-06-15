@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/health")
-public class HealthCheckController {
+public class HealthController {
 
 	@GetMapping
-	public ResponseEntity<HealthCheckResponse> healthCheck() {
+	public ResponseEntity<HealthCheckResponse> health() {
 		return ResponseEntity.ok().body(HealthCheckResponse.of("ok"));
 	}
 
 	// Nested
 	public record HealthCheckResponse(
-		String message
+		String state
 	) {
-		public static HealthCheckResponse of(String message) {
-			return new HealthCheckResponse(message);
+		public static HealthCheckResponse of(String state) {
+			return new HealthCheckResponse(state);
 		}
 	}
 }
