@@ -11,6 +11,12 @@ spring:
     allowed-origins: ${ALLOWED_ORIGINS}
     allowed-methods: ${ALLOWED_METHODS}
 
+  cookie:
+    max-age: ${COOKIE_MAX_AGE}
+    path: ${COOKIE_PATH}
+    http-only: ${COOKIE_HTTP_ONLY}
+    secure: ${COOKIE_SECURE}
+
 jwt:
   secret-key: ${SECRET_KEY}
   access-exp: ${ACCESS_EXPIRED_TIME}
