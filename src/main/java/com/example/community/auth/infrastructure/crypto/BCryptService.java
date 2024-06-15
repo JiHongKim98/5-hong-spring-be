@@ -1,4 +1,4 @@
-package com.example.community.auth.infrastructure.security;
+package com.example.community.auth.infrastructure.crypto;
 
 import static com.example.community.auth.exception.AuthExceptionType.*;
 
