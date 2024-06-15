@@ -1,4 +1,4 @@
-package com.example.community.common.utils;
+package com.example.community.common.presentation;
 
 import java.util.Optional;
 
@@ -9,12 +9,15 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class AuthHeaderExtractor {
 
-	private static final String BEARER = "Bearer";
+	private static final String BEARER_PREFIX = "Bearer";
 
 	public static Optional<String> extract(HttpServletRequest request) {
 		String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if (StringUtils.hasText(header) && header.startsWith(BEARER)) {
-			return Optional.of(header.substring(BEARER.length()).trim());
+		if (
+			StringUtils.hasText(header) &&
+				header.startsWith(BEARER_PREFIX)
+		) {
+			return Optional.of(header.substring(BEARER_PREFIX.length()).trim());
 		}
 		return Optional.empty();
 	}
