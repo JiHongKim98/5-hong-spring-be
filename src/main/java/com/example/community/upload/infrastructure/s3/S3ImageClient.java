@@ -3,6 +3,7 @@ package com.example.community.upload.infrastructure.s3;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.community.common.config.S3Properties;
 import com.example.community.upload.application.ImageClient;
 
 import lombok.RequiredArgsConstructor;

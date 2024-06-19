@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 public record CreatePostRequest(
 	@NotBlank String title,
 	@NotBlank String contents,
-	@NotBlank String thumbnail
+	String thumbnail
 ) {
 }

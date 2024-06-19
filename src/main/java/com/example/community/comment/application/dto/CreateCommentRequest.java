@@ -1,9 +1,10 @@
 package com.example.community.comment.application.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record CreateCommentRequest(
-	@NotBlank Long postId,
+	@NotNull Long postId,
 	@NotBlank String contents
 ) {
 }

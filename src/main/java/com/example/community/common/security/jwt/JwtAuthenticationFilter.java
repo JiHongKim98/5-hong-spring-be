@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import com.example.community.common.presentation.AuthHeaderExtractor;
 import com.example.community.common.security.exception.SecurityException;
-import com.example.community.common.utils.AuthHeaderExtractor;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

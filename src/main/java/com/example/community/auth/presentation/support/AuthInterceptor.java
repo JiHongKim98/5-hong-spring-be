@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.example.community.auth.application.TokenExtractor;
 import com.example.community.auth.exception.AuthException;
 import com.example.community.common.annotation.LoginRequired;
-import com.example.community.common.utils.AuthHeaderExtractor;
+import com.example.community.common.presentation.AuthHeaderExtractor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.community.auth.application.AuthService;
 import com.example.community.auth.application.dto.LoginRequest;
 import com.example.community.auth.application.dto.TokenResponse;
+import com.example.community.common.presentation.CookieHandler;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -26,11 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthController {
 
-	private static final int COOKIE_MAX_AGE = 60 * 60 * 24 * 7;  // 7일
-	private static final String SAME_SITE_NONE = "None";
 	private static final String COOKIE_REFRESH_TOKEN = "refresh_token";
 
 	private final AuthService authService;
+	private final CookieHandler cookieHandler;
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenResponse> login(
@@ -38,12 +38,7 @@ public class AuthController {
 		HttpServletResponse response
 	) {
 		TokenResponse tokenPair = authService.login(loginRequest);
-		ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN, tokenPair.refreshToken())
-			.maxAge(COOKIE_MAX_AGE)
-			.httpOnly(true)
-			.sameSite(SAME_SITE_NONE)
-			.path("/")
-			.build();
+		ResponseCookie cookie = cookieHandler.createCookie(COOKIE_REFRESH_TOKEN, tokenPair.refreshToken());
 		response.addHeader(SET_COOKIE, cookie.toString());
 		return ResponseEntity.ok(tokenPair);
 	}
@@ -54,12 +49,7 @@ public class AuthController {
 		HttpServletResponse response
 	) {
 		TokenResponse tokenPair = authService.reissueToken(refreshToken);
-		ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN, tokenPair.refreshToken())
-			.maxAge(COOKIE_MAX_AGE)
-			.httpOnly(true)
-			.sameSite(SAME_SITE_NONE)
-			.path("/")
-			.build();
+		ResponseCookie cookie = cookieHandler.createCookie(COOKIE_REFRESH_TOKEN, tokenPair.refreshToken());
 		response.addHeader(SET_COOKIE, cookie.toString());
 		return ResponseEntity.ok(tokenPair);
 	}
@@ -69,9 +59,12 @@ public class AuthController {
 	public ResponseEntity<Void> logout(
 		// @Auth Long memberId,
 		@AuthenticationPrincipal Long memberId,
-		@CookieValue(COOKIE_REFRESH_TOKEN) String refreshToken
+		@CookieValue(COOKIE_REFRESH_TOKEN) String refreshToken,
+		HttpServletResponse response
 	) {
 		authService.logout(memberId, refreshToken);
+		ResponseCookie cookie = cookieHandler.deleteCookie(COOKIE_REFRESH_TOKEN);
+		response.addHeader(SET_COOKIE, cookie.toString());
 		return ResponseEntity.noContent().build();
 	}
 }
