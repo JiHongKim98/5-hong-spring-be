@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: test
+
+  servlet:
+    multipart:
+      max-file-size: 1MB  # default 값
+      max-request-size: 1MB
+
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+
+  cookie:
+    max-age: 1234567890
+    path: /
+    http-only: true
+    secure: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/community-db
+    username: hong
+    password: hong
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+
+jwt:
+  secret-key: example_sercret_key_example_secret_key
+  access-exp: 1234567890
+  refresh-exp: 1234567890
+
+cloud:
+  aws:
+    s3:
+      bucket-name: test
+      access-key: test
+      secret-key: test
+      region: ap-northeast-2
+      image-url: https://test.s3.ap-northeast-2.amazonaws.com/
