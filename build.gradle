@@ -35,6 +35,9 @@ dependencies {
     // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    // H2 - Test only
+    testImplementation 'com.h2database:h2'
+
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
@@ -44,9 +47,6 @@ dependencies {
 
     // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // JDBC - FIXME: 추후 모두 JPA 를 사용하는 것으로 통일
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     // QueryDSL
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

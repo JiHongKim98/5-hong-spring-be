@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 
 import com.example.community.comment.domain.Comment;
 import com.example.community.member.domain.Member;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public record CommentDetailResponse(
 	Long commentId,
 	Long postId,
 	String contents,
-	LocalDateTime createdAt,
+	@JsonFormat(pattern = "yyyy-MM-dd") LocalDateTime createdAt,
 	Owner owner
 ) {
 

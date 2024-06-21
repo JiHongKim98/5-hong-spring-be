@@ -2,14 +2,11 @@ package com.example.community.member.domain.respository;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.example.community.member.domain.Member;
 
-// FIXME: 승인 후 DATA-JPA 로 변경
-public interface MemberRepository {
-
-	Member save(Member member);
-
-	void delete(Member member);
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	boolean existsByEmail(String email);
 
